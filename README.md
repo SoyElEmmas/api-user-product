@@ -1,3 +1,4 @@
+** El proyecto utiliza las tecnologías express, nodejs y mongoose (mongo db)
 ** se puede correr mediante el comando npm run dev
 ** El servidor se levanta en el puerto 3000 de localhost
 ** Existen 3 tipos de roles: admin, moderator y user
