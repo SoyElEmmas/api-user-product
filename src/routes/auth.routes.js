@@ -5,5 +5,5 @@ const router = Router()
 import * as autController from '../controllers/auth.controller.js'
 
 router.post('/signin',autController.signin)
-router.post('/signup',check.checkExistingUser, autController.signup)
+router.post('/signup',[check.checkExistingUser,check.checkExistingRole], autController.signup)
 export default router;

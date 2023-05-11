@@ -10,7 +10,9 @@ const router = Router()
 //Create
 router.post('/',[authJwt.verifyToken,
                  //authJwt.isModerator,
-                 check.checkExistingUser],userCtrl.createUser)
+                 check.checkExistingUser,
+                 check.checkDuplicateUsernameOrEmail,
+                check.checkExistingRole],userCtrl.createUser)
 
 //Read
 router.get('/',[authJwt.verifyToken],userCtrl.getUsers)
@@ -20,8 +22,11 @@ router.get('/:userId',[authJwt.verifyToken]//,authJwt.isModerator]
           ,userCtrl.getUserById)
 
 //Update
-router.put('/:userId',//[authJwt.verifyToken,authJwt.isModerator,authJwt.isAdmin],
-userCtrl.updateUserById)
+router.put('/:userId',[authJwt.verifyToken,
+                       authJwt.isAdmin    ,
+                       check.checkExistingUser,
+                       check.checkExistingRole],
+                       userCtrl.updateUserById)
 
 //Delete
 router.delete('/:userId',[authJwt.verifyToken,authJwt.isModerator,authJwt.isAdmin],userCtrl.deleteUserById)

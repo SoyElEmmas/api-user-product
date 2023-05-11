@@ -1,6 +1,18 @@
 import User from "../models/User.js";
 import { ROLES } from "../models/Role.js";
 
+export const checkDuplicateUsernameOrEmail = async (req,res,next) => {
+    const {username,email} = req.body;
+
+    const user = await User.findOne({username:username})
+    if (user) return res.status(400).json({message: 'Username already exists'})
+
+    const emailUser = await User.findOne({email:email})
+    if(emailUser) return res.status(400).json({message: 'email already exists'})
+
+    next();
+}
+
 export const checkExistingUser = async (req, res, next) => {
   try {
     const userFound = await User.findOne({ username: req.body.username });
@@ -18,9 +30,9 @@ export const checkExistingUser = async (req, res, next) => {
 };
 
 export const checkExistingRole = (req, res, next) => {
-  req.body.roles.find();
+  const roles = req.body.roles; 
 
-  if (!req.body.roles) return res.status(400).json({ message: "No roles" });
+  if (!roles) return res.status(400).json({ message: "No roles" });
 
   for (let i = 0; i < req.body.roles.length; i++) {
     if (!ROLES.includes(req.body.roles[i])) {
